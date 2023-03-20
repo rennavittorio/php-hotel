@@ -41,28 +41,26 @@ $hotels = [
 ];
 
 
-
-// var_dump($_GET);
-
-
-// $filtered_by_park = array_filter($hotels, function ($el){
-//     return $el['parking'] == $_GET['parking'];
-// });
-
-// $filtered_by_rate = array_filter($hotels, function ($el){
-//     return $el['vote'] >= $_GET['rating'];
-// });
+$park_input = isset($_GET['parking']) ? $_GET['parking'] : '';
+$rate_input = isset($_GET['rating']) ? $_GET['rating'] : '';
 
 
 $filtered_hotels = array_filter($hotels, function($el){
     $park_input = isset($_GET['parking']) ? $_GET['parking'] : '';
-    $rate_input = isset($_GET['rating']) ? $_GET['rating'] : 0;
-    return $el['parking'] == $park_input && $el['vote'] >= $rate_input;
-});
+    $rate_input = isset($_GET['rating']) ? $_GET['rating'] : '';
 
-// var_dump($filtered_by_park);
-// var_dump($filtered_by_rate);
-// var_dump($filtered_hotels);
+    $parking = true;
+    if ($park_input !== ''){
+        $parking = $el['parking'] == $park_input;
+    }
+
+    $rating = true;
+    if ($rate_input !== ''){
+        $rating = $el['vote'] >= $rate_input;
+    }
+
+    return $parking && $rating ;
+});
 
 
 ?>
@@ -88,18 +86,19 @@ $filtered_hotels = array_filter($hotels, function($el){
 
             <form action="./index.php" method="GET" class="d-flex gap-5">
 
-                <select class="form-select" name="parking" value="<?php echo $park_input; ?>">
-                    <option value="">-- select --</option>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                <select class="form-select" name="parking" value="">
+                    <option value="" <?php $park_input == '' ? print 'selected' : ''; ?>>-- select --</option>
+                    <option value="1" <?php $park_input == 1 ? print 'selected' : ''; ?>>Yes</option>
+                    <option value="0" <?php $park_input == 0 ? print 'selected' : ''; ?>>No</option>
                 </select>
 
-                <select class="form-select" name="rating" value="<?php echo $rate_input; ?>">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                <select class="form-select" name="rating" value="">
+                    <option value="" <?php $rate_input == '' ? print 'selected' : ''; ?>>-- select --</option>
+                    <option value="1" <?php $rate_input == 1 ? print 'selected' : ''; ?>>1</option>
+                    <option value="2" <?php $rate_input == 2 ? print 'selected' : ''; ?>>2</option>
+                    <option value="3" <?php $rate_input == 3 ? print 'selected' : ''; ?>>3</option>
+                    <option value="4" <?php $rate_input == 4 ? print 'selected' : ''; ?>>4</option>
+                    <option value="5" <?php $rate_input == 5 ? print 'selected' : ''; ?>>5</option>
                 </select>
 
                 <button type="submit" class="btn btn-primary">Send</button>
