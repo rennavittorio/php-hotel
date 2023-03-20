@@ -1,44 +1,69 @@
 <?php
 
-    $hotels = [
+$hotels = [
 
-        [
-            'name' => 'Hotel Belvedere',
-            'description' => 'Hotel Belvedere Descrizione',
-            'parking' => true,
-            'vote' => 4,
-            'distance_to_center' => 10.4
-        ],
-        [
-            'name' => 'Hotel Futuro',
-            'description' => 'Hotel Futuro Descrizione',
-            'parking' => true,
-            'vote' => 2,
-            'distance_to_center' => 2
-        ],
-        [
-            'name' => 'Hotel Rivamare',
-            'description' => 'Hotel Rivamare Descrizione',
-            'parking' => false,
-            'vote' => 1,
-            'distance_to_center' => 1
-        ],
-        [
-            'name' => 'Hotel Bellavista',
-            'description' => 'Hotel Bellavista Descrizione',
-            'parking' => false,
-            'vote' => 5,
-            'distance_to_center' => 5.5
-        ],
-        [
-            'name' => 'Hotel Milano',
-            'description' => 'Hotel Milano Descrizione',
-            'parking' => true,
-            'vote' => 2,
-            'distance_to_center' => 50
-        ],
+    [
+        'name' => 'Hotel Belvedere',
+        'description' => 'Hotel Belvedere Descrizione',
+        'parking' => true,
+        'vote' => 4,
+        'distance_to_center' => 10.4
+    ],
+    [
+        'name' => 'Hotel Futuro',
+        'description' => 'Hotel Futuro Descrizione',
+        'parking' => true,
+        'vote' => 2,
+        'distance_to_center' => 2
+    ],
+    [
+        'name' => 'Hotel Rivamare',
+        'description' => 'Hotel Rivamare Descrizione',
+        'parking' => false,
+        'vote' => 1,
+        'distance_to_center' => 1
+    ],
+    [
+        'name' => 'Hotel Bellavista',
+        'description' => 'Hotel Bellavista Descrizione',
+        'parking' => false,
+        'vote' => 5,
+        'distance_to_center' => 5.5
+    ],
+    [
+        'name' => 'Hotel Milano',
+        'description' => 'Hotel Milano Descrizione',
+        'parking' => true,
+        'vote' => 2,
+        'distance_to_center' => 50
+    ],
 
-    ];
+];
+
+
+
+// var_dump($_GET);
+
+
+// $filtered_by_park = array_filter($hotels, function ($el){
+//     return $el['parking'] == $_GET['parking'];
+// });
+
+// $filtered_by_rate = array_filter($hotels, function ($el){
+//     return $el['vote'] >= $_GET['rating'];
+// });
+
+
+$filtered_hotels = array_filter($hotels, function($el){
+    $park_input = isset($_GET['parking']) ? $_GET['parking'] : '';
+    $rate_input = isset($_GET['rating']) ? $_GET['rating'] : 0;
+    return $el['parking'] == $park_input && $el['vote'] >= $rate_input;
+});
+
+// var_dump($filtered_by_park);
+// var_dump($filtered_by_rate);
+// var_dump($filtered_hotels);
+
 
 ?>
 
@@ -55,6 +80,35 @@
     <title>hotelz</title>
 </head>
 <body>
+
+
+    <div class="container my-5">
+
+        <div class="row">
+
+            <form action="./index.php" method="GET" class="d-flex gap-5">
+
+                <select class="form-select" name="parking" value="<?php echo $park_input; ?>">
+                    <option value="">-- select --</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+
+                <select class="form-select" name="rating" value="<?php echo $rate_input; ?>">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+
+                <button type="submit" class="btn btn-primary">Send</button>
+
+            </form>
+
+        </div>
+
+    </div>
 
 
     <div class="container">
@@ -74,7 +128,7 @@
 
             <tbody>
                 <?php 
-                foreach ($hotels as $key => $hotel){
+                foreach ($filtered_hotels as $key => $hotel){
                 ?>
                     <tr>
                         <th scope="row"><?php echo $key ?></th>
