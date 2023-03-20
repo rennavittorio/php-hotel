@@ -56,38 +56,55 @@
 </head>
 <body>
 
-    <ul>
 
+    <div class="container">
 
-    <?php
-    
-    foreach ($hotels as $key => $hotel){
-    ?>
-        
-        <li><?php echo $hotel['name'] ?>
+        <table class="table">
 
-            <ul>
-                <?php foreach ($hotel as $key => $info){
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Hotel</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Parking</th>
+                    <th scope="col">Vote</th>
+                    <th scope="col">Distance to center</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php 
+                foreach ($hotels as $key => $hotel){
                 ?>
-                    
-                    <li><?php echo $key.': '. $info ?></li>
+                    <tr>
+                        <th scope="row"><?php echo $key ?></th>
 
+                        <?php
+                        foreach ($hotel as $key => $info){
+                        ?>
+                            <td><?php echo $info ?></td>
+                        <?php
+                        }
+                        ?>
+
+                    </tr>
                 <?php
-                } ?>
+                }
+                ?>
 
-            </ul>
-    
-    
-    
-        </li>
+                <!-- <tr>
+                    <th scope="row">1</th>
+                    <td>name...</td>
+                    <td>desc...</td>
+                    <td>park...</td>
+                    <td>vote...</td>
+                    <td>distance...</td>
+                </tr> -->
+            </tbody>
 
-    <?php
-    };
-
-    ?>
-
-    </ul>
-
+        </table>
+        
+    </div>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>   
